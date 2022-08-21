@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.1.75">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="description" content="Helpers for getting GitHub API events">
+
+<title>ghapi - The events API</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: 1;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="styles.css">
+<meta property="og:title" content="ghapi - The events API">
+<meta property="og:description" content="Helpers for getting GitHub API events">
+<meta property="og:site-name" content="ghapi">
+<meta name="twitter:title" content="ghapi - The events API">
+<meta name="twitter:description" content="Helpers for getting GitHub API events">
+<meta name="twitter:card" content="summary">
+</head>
+
+<body class="nav-sidebar floating nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">ghapi</span>
+  </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/fastai/ghapi/tree/master/"><i class="bi bi-github" role="img">
+</i> 
+ </a>
+  </li>  
+</ul>
+              <div class="quarto-toggle-container">
+                  <a href="" class="quarto-reader-toggle nav-link" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+              </div>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title">The events API</h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">ghapi</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./core.html" class="sidebar-item-text sidebar-link">GhApi details</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./actions.html" class="sidebar-item-text sidebar-link">GitHub Actions details</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./auth.html" class="sidebar-item-text sidebar-link">Authentication</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./page.html" class="sidebar-item-text sidebar-link">Pagination</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./event.html" class="sidebar-item-text sidebar-link active">The events API</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cli.html" class="sidebar-item-text sidebar-link">Command line interface</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./50_fullapi.html" class="sidebar-item-text sidebar-link">Full GitHub API reference</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./build_lib.html" class="sidebar-item-text sidebar-link">Internal - OpenAPI Parser</a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">tutorials</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./tutorials/tutorial_actions.html" class="sidebar-item-text sidebar-link">Getting started with GitHub Actions</a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#ghapi.list_events" id="toc-ghapi.list_events" class="nav-link active" data-scroll-target="#ghapi.list_events">GhApi.list_events</a></li>
+  <li><a href="#ghapi.list_events_parallel" id="toc-ghapi.list_events_parallel" class="nav-link" data-scroll-target="#ghapi.list_events_parallel">GhApi.list_events_parallel</a>
+  <ul>
+  <li><a href="#ghevent" id="toc-ghevent" class="nav-link" data-scroll-target="#ghevent">GhEvent</a></li>
+  </ul></li>
+  <li><a href="#ghapi.fetch_events" id="toc-ghapi.fetch_events" class="nav-link" data-scroll-target="#ghapi.fetch_events">GhApi.fetch_events</a></li>
+  <li><a href="#load_sample_events" id="toc-load_sample_events" class="nav-link" data-scroll-target="#load_sample_events">load_sample_events</a></li>
+  <li><a href="#save_sample_events" id="toc-save_sample_events" class="nav-link" data-scroll-target="#save_sample_events">save_sample_events</a></li>
+  <li><a href="#ghevent.full_type" id="toc-ghevent.full_type" class="nav-link" data-scroll-target="#ghevent.full_type">GhEvent.full_type</a></li>
+  <li><a href="#ghevent.emoji" id="toc-ghevent.emoji" class="nav-link" data-scroll-target="#ghevent.emoji">GhEvent.emoji</a></li>
+  <li><a href="#ghevent.description" id="toc-ghevent.description" class="nav-link" data-scroll-target="#ghevent.description">GhEvent.description</a></li>
+  <li><a href="#ghevent.text" id="toc-ghevent.text" class="nav-link" data-scroll-target="#ghevent.text">GhEvent.text</a></li>
+  </ul>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/fastai/ghapi/tree/master/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block">The events API</h1>
+</div>
+
+<div>
+  <div class="description">
+    Helpers for getting GitHub API events
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    
+    
+  </div>
+  
+
+</header>
+
+<!-- WARNING: THIS FILE WAS AUTOGENERATED! DO NOT EDIT! -->
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>api <span class="op">=</span> GhApi()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<hr>
+<section id="ghapi.list_events" class="level3">
+<h3 class="anchored" data-anchor-id="ghapi.list_events">GhApi.list_events</h3>
+<blockquote class="blockquote">
+<pre><code> GhApi.list_events (per_page=30, page=1, username=None, org=None,
+                    owner=None, repo=None)</code></pre>
+</blockquote>
+<p>Fetch public events for repo network, org, user, or all</p>
+<hr>
+</section>
+<section id="ghapi.list_events_parallel" class="level3">
+<h3 class="anchored" data-anchor-id="ghapi.list_events_parallel">GhApi.list_events_parallel</h3>
+<blockquote class="blockquote">
+<pre><code> GhApi.list_events_parallel (per_page=30, n_pages=8, username=None,
+                             org=None, owner=None, repo=None)</code></pre>
+</blockquote>
+<p>Fetch as many events from <code>list_events</code> in parallel as available</p>
+<p><code>list_events</code> and <code>list_events_parallel</code> support the following:</p>
+<table class="table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Events from</th>
+<th style="text-align: left;">Example</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Organization</td>
+<td style="text-align: left;"><code>api.list_events_parallel(org='fastai')</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">User</td>
+<td style="text-align: left;"><code>api.list_events_parallel(username='jph00')</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Repository network</td>
+<td style="text-align: left;"><code>api.list_events_parallel(owner='fastai', repo='fastcore')</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">All public</td>
+<td style="text-align: left;"><code>api.list_events_parallel()</code></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<section id="ghevent" class="level4">
+<h4 class="anchored" data-anchor-id="ghevent">GhEvent</h4>
+<p>Class for events returned from `fetch_events</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>([snake2camel(o)<span class="op">+</span><span class="st">'Event'</span> <span class="cf">for</span> o <span class="kw">in</span> Event])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>['PageBuildEvent', 'ContentReferenceEvent', 'RepositoryImportEvent', 'CreateEvent', 'WorkflowRunEvent', 'DeleteEvent', 'OrganizationEvent', 'SponsorshipEvent', 'ProjectColumnEvent', 'PushEvent', 'ContextEvent', 'MilestoneEvent', 'ProjectCardEvent', 'ProjectEvent', 'PackageEvent', 'PullRequestEvent', 'RepositoryDispatchEvent', 'TeamAddEvent', 'WorkflowDispatchEvent', 'MemberEvent', 'MetaEvent', 'CodeScanningAlertEvent', 'PublicEvent', 'NeedsEvent', 'CheckRunEvent', 'SecurityAdvisoryEvent', 'PullRequestReviewCommentEvent', 'OrgBlockEvent', 'CommitCommentEvent', 'WatchEvent', 'MarketplacePurchaseEvent', 'StarEvent', 'InstallationRepositoriesEvent', 'CheckSuiteEvent', 'GithubAppAuthorizationEvent', 'TeamEvent', 'StatusEvent', 'RepositoryVulnerabilityAlertEvent', 'PullRequestReviewEvent', 'LabelEvent', 'InstallationEvent', 'ReleaseEvent', 'IssuesEvent', 'RepositoryEvent', 'GollumEvent', 'MembershipEvent', 'DeploymentEvent', 'DeployKeyEvent', 'IssueCommentEvent', 'PingEvent', 'DeploymentStatusEvent', 'ForkEvent', 'ScheduleEvent']</code></pre>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="ghapi.fetch_events" class="level3">
+<h3 class="anchored" data-anchor-id="ghapi.fetch_events">GhApi.fetch_events</h3>
+<blockquote class="blockquote">
+<pre><code> GhApi.fetch_events (n_pages=3, pause=0.4, per_page=30, types=None,
+                     incl_bot=False, username=None, org=None, owner=None,
+                     repo=None)</code></pre>
+</blockquote>
+<p>Generate an infinite stream of events, optionally filtered to <code>types, with</code>pause` seconds between requests</p>
+<hr>
+</section>
+<section id="load_sample_events" class="level3">
+<h3 class="anchored" data-anchor-id="load_sample_events">load_sample_events</h3>
+<blockquote class="blockquote">
+<pre><code> load_sample_events ()</code></pre>
+</blockquote>
+<p>Load sample events, downloading if needed</p>
+<hr>
+</section>
+<section id="save_sample_events" class="level3">
+<h3 class="anchored" data-anchor-id="save_sample_events">save_sample_events</h3>
+<blockquote class="blockquote">
+<pre><code> save_sample_events (n=5000)</code></pre>
+</blockquote>
+<p>Save the most recent <code>n</code> events as compressed JSON</p>
+<hr>
+</section>
+<section id="ghevent.full_type" class="level3">
+<h3 class="anchored" data-anchor-id="ghevent.full_type">GhEvent.full_type</h3>
+<p>Concatenation of <code>type</code> and <code>payload.action</code> (if available)</p>
+<p>5000 sample events (taken from a single recent period) are available, and are downloaded and cached by <a href="https://ghapi.fast.ai/event.html#load_sample_events"><code>load_sample_events</code></a>. <code>full_type</code> provides the combination of <code>type</code> and <code>payload.action</code> (where available) for each event. Here’s the frequency of all <code>full_types</code> in the sample:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>evts <span class="op">=</span> load_sample_events()</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>x,y <span class="op">=</span> <span class="bu">zip</span>(<span class="op">*</span>Counter([o.full_type <span class="cf">for</span> o <span class="kw">in</span> evts]).most_common())</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>))</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>plt.barh(x,y)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="04_event_files/figure-html/cell-11-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<hr>
+</section>
+<section id="ghevent.emoji" class="level3">
+<h3 class="anchored" data-anchor-id="ghevent.emoji">GhEvent.emoji</h3>
+<p>Emoji for event from <code>evt_emojis</code></p>
+<hr>
+</section>
+<section id="ghevent.description" class="level3">
+<h3 class="anchored" data-anchor-id="ghevent.description">GhEvent.description</h3>
+<p>Description of event</p>
+<hr>
+</section>
+<section id="ghevent.text" class="level3">
+<h3 class="anchored" data-anchor-id="ghevent.text">GhEvent.text</h3>
+<p>Text (e.g.&nbsp;body or title) of event, if exists</p>
+<p>You can use the <code>description</code>, <code>text</code>, and <code>emoji</code> properties to display events, e.g:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>exs <span class="op">=</span> [first(evts, risinstance(o)) <span class="cf">for</span> o <span class="kw">in</span> described_evts]</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> _fmt_evt(o):</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    res <span class="op">=</span> <span class="ss">f'</span><span class="sc">{</span>o<span class="sc">.</span>emoji<span class="sc">}</span><span class="ss"> **</span><span class="sc">{</span>o<span class="sc">.</span>actor<span class="sc">.</span>login<span class="sc">}</span><span class="ss">** '</span> <span class="op">+</span> truncstr(<span class="ss">f'</span><span class="sc">{</span>o<span class="sc">.</span>description<span class="sc">}</span><span class="ss"> *</span><span class="sc">{</span>o<span class="sc">.</span>repo<span class="sc">.</span>name<span class="sc">}</span><span class="ss">'</span>,<span class="dv">60</span>) <span class="op">+</span> <span class="st">'*'</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> o.text: res <span class="op">+=</span> <span class="ss">f': "</span><span class="sc">{</span>truncstr(o.text, <span class="dv">50</span>)<span class="sc">}</span><span class="ss">"'</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> res.replace(<span class="st">'</span><span class="ch">\n</span><span class="st">'</span>,<span class="st">' '</span>)</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>Markdown(<span class="st">'|Type|Description|</span><span class="ch">\n</span><span class="st">|:--|:--|</span><span class="ch">\n</span><span class="st">'</span> <span class="op">+</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>         <span class="st">'</span><span class="ch">\n</span><span class="st">'</span>.join(<span class="ss">f'|</span><span class="sc">{</span>camel2words(o.<span class="bu">type</span>.replace(<span class="st">"PullRequest"</span>,<span class="st">"PR "</span>)[:<span class="op">-</span><span class="dv">5</span>])<span class="sc">}</span><span class="ss">|</span><span class="sc">{</span>_fmt_evt(o)<span class="sc">}</span><span class="ss">|'</span> <span class="cf">for</span> o <span class="kw">in</span> exs))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<table class="table table-sm table-striped">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Push</td>
+<td style="text-align: left;">⭐ <strong>fedya</strong> pushed 1 commits to “rolling” in <em>OpenMandrivaAssociation/g…</em></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Delete</td>
+<td style="text-align: left;">✂ <strong>dependabot[bot]</strong> deleted branch “packit-0.5.0” in <em>paketo-buildpacks/occam</em></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Create</td>
+<td style="text-align: left;">🏭 <strong>github-classroom[bot]</strong> created repository in <em>Introduction-to-Programming-OSOWSKI/…</em>: “1-5-add-two-numbers-noraahlman23 created by GitHu…”</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PR</td>
+<td style="text-align: left;">📬 <strong>JerryMacedoCastro</strong> opened PR #1 on <em>JerryMacedoCastro/tb-arquitetura-js</em>: “Input component created”</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Member</td>
+<td style="text-align: left;">💃 <strong>github-classroom[bot]</strong> added member noraahlman23 in <em>Introduction-to-Programming-O…</em></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Public</td>
+<td style="text-align: left;">♥ <strong>navikt</strong> made public repo <em>navikt/syfoinntektsmelding</em></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">PR Review Comment</td>
+<td style="text-align: left;">🗨 <strong>fruttasecca</strong> created review comment on PR #97 in <em>orchest/orchest</em>: “Does this make it so that users coming from an ol…”</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Fork</td>
+<td style="text-align: left;">🍽 <strong>amin-lotf</strong> forked <em>vinaygaba/Learn-Jetpack-Compose-By-Example</em>: “🚀 This project contains various examples that sho…”</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Commit Comment</td>
+<td style="text-align: left;">🎉 <strong>vercel[bot]</strong> created commint comment in <em>Samaraferreira/test-frontend</em>: “Successfully deployed to the following URLs: * […”</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Watch</td>
+<td style="text-align: left;">👀 <strong>ikarius</strong> started watching <em>jorgebucaran/awsm.fish</em></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">PR Review</td>
+<td style="text-align: left;">💌 <strong>fruttasecca</strong> created PR review in <em>orchest/orchest</em></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Release</td>
+<td style="text-align: left;">🚀 <strong>github-actions[bot]</strong> published release v1.1.3 in <em>vouv/srun</em></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Issues</td>
+<td style="text-align: left;">🐛 <strong>efritz</strong> opened issue #16915 on <em>sourcegraph/sourcegraph</em>: “auto-indexing: Add docker/src-cli command wall cl…”</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Gollum</td>
+<td style="text-align: left;">📚 <strong>TradingToolCrypto</strong> created wiki page in <em>TradingToolCrypto/TradingTool-Wiki</em></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Issue Comment</td>
+<td style="text-align: left;">💬 <strong>jerhard</strong> created comment on issue #2570 in <em>ls1intum/Artemis</em>: “Do you think that spaces (or even white space cha…”</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

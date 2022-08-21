@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.1.75">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>ghapi – changelog</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: 1;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-sidebar floating nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">ghapi</span>
+  </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/fastai/ghapi/tree/master/"><i class="bi bi-github" role="img">
+</i> 
+ </a>
+  </li>  
+</ul>
+              <div class="quarto-toggle-container">
+                  <a href="" class="quarto-reader-toggle nav-link" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+              </div>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title">(Untitled)</h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">ghapi</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./core.html" class="sidebar-item-text sidebar-link">GhApi details</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./actions.html" class="sidebar-item-text sidebar-link">GitHub Actions details</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./auth.html" class="sidebar-item-text sidebar-link">Authentication</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./page.html" class="sidebar-item-text sidebar-link">Pagination</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./event.html" class="sidebar-item-text sidebar-link">The events API</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cli.html" class="sidebar-item-text sidebar-link">Command line interface</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./50_fullapi.html" class="sidebar-item-text sidebar-link">Full GitHub API reference</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./build_lib.html" class="sidebar-item-text sidebar-link">Internal - OpenAPI Parser</a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">tutorials</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./tutorials/tutorial_actions.html" class="sidebar-item-text sidebar-link">Getting started with GitHub Actions</a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#release-notes" id="toc-release-notes" class="nav-link active" data-scroll-target="#release-notes">Release notes</a>
+  <ul>
+  <li><a href="#section" id="toc-section" class="nav-link" data-scroll-target="#section">1.0.1</a>
+  <ul class="collapse">
+  <li><a href="#new-features" id="toc-new-features" class="nav-link" data-scroll-target="#new-features">New Features</a></li>
+  </ul></li>
+  <li><a href="#section-1" id="toc-section-1" class="nav-link" data-scroll-target="#section-1">1.0.0</a>
+  <ul class="collapse">
+  <li><a href="#new-features-1" id="toc-new-features-1" class="nav-link" data-scroll-target="#new-features-1">New Features</a></li>
+  <li><a href="#bugs-squashed" id="toc-bugs-squashed" class="nav-link" data-scroll-target="#bugs-squashed">Bugs Squashed</a></li>
+  </ul></li>
+  <li><a href="#section-2" id="toc-section-2" class="nav-link" data-scroll-target="#section-2">0.1.21</a>
+  <ul class="collapse">
+  <li><a href="#bugs-squashed-1" id="toc-bugs-squashed-1" class="nav-link" data-scroll-target="#bugs-squashed-1">Bugs Squashed</a></li>
+  </ul></li>
+  <li><a href="#section-3" id="toc-section-3" class="nav-link" data-scroll-target="#section-3">0.1.20</a>
+  <ul class="collapse">
+  <li><a href="#new-features-2" id="toc-new-features-2" class="nav-link" data-scroll-target="#new-features-2">New Features</a></li>
+  <li><a href="#bugs-squashed-2" id="toc-bugs-squashed-2" class="nav-link" data-scroll-target="#bugs-squashed-2">Bugs Squashed</a></li>
+  </ul></li>
+  <li><a href="#section-4" id="toc-section-4" class="nav-link" data-scroll-target="#section-4">0.1.19</a>
+  <ul class="collapse">
+  <li><a href="#new-features-3" id="toc-new-features-3" class="nav-link" data-scroll-target="#new-features-3">New Features</a></li>
+  </ul></li>
+  <li><a href="#section-5" id="toc-section-5" class="nav-link" data-scroll-target="#section-5">0.1.18</a>
+  <ul class="collapse">
+  <li><a href="#bugs-squashed-3" id="toc-bugs-squashed-3" class="nav-link" data-scroll-target="#bugs-squashed-3">Bugs Squashed</a></li>
+  </ul></li>
+  <li><a href="#section-6" id="toc-section-6" class="nav-link" data-scroll-target="#section-6">0.1.17</a>
+  <ul class="collapse">
+  <li><a href="#bugs-squashed-4" id="toc-bugs-squashed-4" class="nav-link" data-scroll-target="#bugs-squashed-4">Bugs Squashed</a></li>
+  </ul></li>
+  <li><a href="#section-7" id="toc-section-7" class="nav-link" data-scroll-target="#section-7">0.1.15</a>
+  <ul class="collapse">
+  <li><a href="#new-features-4" id="toc-new-features-4" class="nav-link" data-scroll-target="#new-features-4">New Features</a></li>
+  </ul></li>
+  <li><a href="#section-8" id="toc-section-8" class="nav-link" data-scroll-target="#section-8">0.1.14</a>
+  <ul class="collapse">
+  <li><a href="#new-features-5" id="toc-new-features-5" class="nav-link" data-scroll-target="#new-features-5">New Features</a></li>
+  <li><a href="#bugs-squashed-5" id="toc-bugs-squashed-5" class="nav-link" data-scroll-target="#bugs-squashed-5">Bugs Squashed</a></li>
+  </ul></li>
+  <li><a href="#section-9" id="toc-section-9" class="nav-link" data-scroll-target="#section-9">0.1.13</a>
+  <ul class="collapse">
+  <li><a href="#bugs-squashed-6" id="toc-bugs-squashed-6" class="nav-link" data-scroll-target="#bugs-squashed-6">Bugs Squashed</a></li>
+  </ul></li>
+  <li><a href="#section-10" id="toc-section-10" class="nav-link" data-scroll-target="#section-10">0.1.11</a>
+  <ul class="collapse">
+  <li><a href="#bugs-squashed-7" id="toc-bugs-squashed-7" class="nav-link" data-scroll-target="#bugs-squashed-7">Bugs Squashed</a></li>
+  </ul></li>
+  <li><a href="#section-11" id="toc-section-11" class="nav-link" data-scroll-target="#section-11">0.1.10</a></li>
+  <li><a href="#section-12" id="toc-section-12" class="nav-link" data-scroll-target="#section-12">0.1.8</a>
+  <ul class="collapse">
+  <li><a href="#new-features-6" id="toc-new-features-6" class="nav-link" data-scroll-target="#new-features-6">New Features</a></li>
+  </ul></li>
+  <li><a href="#section-13" id="toc-section-13" class="nav-link" data-scroll-target="#section-13">0.1.7</a>
+  <ul class="collapse">
+  <li><a href="#new-features-7" id="toc-new-features-7" class="nav-link" data-scroll-target="#new-features-7">New Features</a></li>
+  </ul></li>
+  <li><a href="#section-14" id="toc-section-14" class="nav-link" data-scroll-target="#section-14">0.1.6</a>
+  <ul class="collapse">
+  <li><a href="#new-features-8" id="toc-new-features-8" class="nav-link" data-scroll-target="#new-features-8">New Features</a></li>
+  </ul></li>
+  <li><a href="#section-15" id="toc-section-15" class="nav-link" data-scroll-target="#section-15">0.1.1</a>
+  <ul class="collapse">
+  <li><a href="#new-features-9" id="toc-new-features-9" class="nav-link" data-scroll-target="#new-features-9">New Features</a></li>
+  <li><a href="#bugs-squashed-8" id="toc-bugs-squashed-8" class="nav-link" data-scroll-target="#bugs-squashed-8">Bugs Squashed</a></li>
+  </ul></li>
+  <li><a href="#section-16" id="toc-section-16" class="nav-link" data-scroll-target="#section-16">0.1.0</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/fastai/ghapi/tree/master/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+
+<section id="release-notes" class="level1">
+<h1>Release notes</h1>
+<!-- do not remove -->
+<section id="section" class="level2">
+<h2 class="anchored" data-anchor-id="section">1.0.1</h2>
+<section id="new-features" class="level3">
+<h3 class="anchored" data-anchor-id="new-features">New Features</h3>
+<ul>
+<li>warn if no GitHub token found (<a href="https://github.com/fastai/ghapi/issues/145">#145</a>)</li>
+<li>set <code>GITHUB_DEBUG=1</code> to print requests sent to GitHub</li>
+</ul>
+</section>
+</section>
+<section id="section-1" class="level2">
+<h2 class="anchored" data-anchor-id="section-1">1.0.0</h2>
+<section id="new-features-1" class="level3">
+<h3 class="anchored" data-anchor-id="new-features-1">New Features</h3>
+<ul>
+<li>add <code>delete_file</code> and <code>create_file</code> (<a href="https://github.com/fastai/ghapi/issues/143">#143</a>)</li>
+<li>Add a “Documentation” link to the sidebar on PyPI (<a href="https://github.com/fastai/ghapi/pull/106">#106</a>), thanks to <a href="https://github.com/nedbat"><span class="citation" data-cites="nedbat">@nedbat</span></a></li>
+<li>Add support for media types (<a href="https://github.com/fastai/ghapi/pull/102">#102</a>), thanks to <a href="https://github.com/lfdebrux"><span class="citation" data-cites="lfdebrux">@lfdebrux</span></a></li>
+</ul>
+</section>
+<section id="bugs-squashed" class="level3">
+<h3 class="anchored" data-anchor-id="bugs-squashed">Bugs Squashed</h3>
+<ul>
+<li>Fix links to GitHub docs (<a href="https://github.com/fastai/ghapi/pull/136">#136</a>), thanks to <a href="https://github.com/hwine"><span class="citation" data-cites="hwine">@hwine</span></a></li>
+</ul>
+</section>
+</section>
+<section id="section-2" class="level2">
+<h2 class="anchored" data-anchor-id="section-2">0.1.21</h2>
+<section id="bugs-squashed-1" class="level3">
+<h3 class="anchored" data-anchor-id="bugs-squashed-1">Bugs Squashed</h3>
+<ul>
+<li>fix <code>create_gist</code></li>
+</ul>
+</section>
+</section>
+<section id="section-3" class="level2">
+<h2 class="anchored" data-anchor-id="section-3">0.1.20</h2>
+<section id="new-features-2" class="level3">
+<h3 class="anchored" data-anchor-id="new-features-2">New Features</h3>
+<ul>
+<li>add <code>create_gist</code> (<a href="https://github.com/fastai/ghapi/issues/129">#129</a>)</li>
+</ul>
+</section>
+<section id="bugs-squashed-2" class="level3">
+<h3 class="anchored" data-anchor-id="bugs-squashed-2">Bugs Squashed</h3>
+<ul>
+<li><code>HTTP Error 422: Unprocessable Entity</code> returned for <code>issues.add_labels</code> in version <code>0.1.17</code> (<a href="https://github.com/fastai/ghapi/issues/69">#69</a>)</li>
+</ul>
+</section>
+</section>
+<section id="section-4" class="level2">
+<h2 class="anchored" data-anchor-id="section-4">0.1.19</h2>
+<section id="new-features-3" class="level3">
+<h3 class="anchored" data-anchor-id="new-features-3">New Features</h3>
+<ul>
+<li>Remove need to URL-quote some parameters (<a href="https://github.com/fastai/ghapi/issues/54">#54</a>)</li>
+</ul>
+</section>
+</section>
+<section id="section-5" class="level2">
+<h2 class="anchored" data-anchor-id="section-5">0.1.18</h2>
+<section id="bugs-squashed-3" class="level3">
+<h3 class="anchored" data-anchor-id="bugs-squashed-3">Bugs Squashed</h3>
+<ul>
+<li><code>HTTP Error 422: Unprocessable Entity</code> returned for <code>issues.add_labels</code> (<a href="https://github.com/fastai/ghapi/issues/69">#69</a>)</li>
+</ul>
+</section>
+</section>
+<section id="section-6" class="level2">
+<h2 class="anchored" data-anchor-id="section-6">0.1.17</h2>
+<section id="bugs-squashed-4" class="level3">
+<h3 class="anchored" data-anchor-id="bugs-squashed-4">Bugs Squashed</h3>
+<ul>
+<li>Fix ability to define scopes (<a href="https://github.com/fastai/ghapi/pull/53">#53</a>), thanks to <a href="https://github.com/danpalmer"><span class="citation" data-cites="danpalmer">@danpalmer</span></a></li>
+</ul>
+</section>
+</section>
+<section id="section-7" class="level2">
+<h2 class="anchored" data-anchor-id="section-7">0.1.15</h2>
+<section id="new-features-4" class="level3">
+<h3 class="anchored" data-anchor-id="new-features-4">New Features</h3>
+<ul>
+<li>make <code>actions_group</code> a context manager (<a href="https://github.com/fastai/ghapi/issues/33">#33</a>)</li>
+</ul>
+</section>
+</section>
+<section id="section-8" class="level2">
+<h2 class="anchored" data-anchor-id="section-8">0.1.14</h2>
+<section id="new-features-5" class="level3">
+<h3 class="anchored" data-anchor-id="new-features-5">New Features</h3>
+<ul>
+<li><code>text</code> property for <code>GhEvent</code> (<a href="https://github.com/fastai/ghapi/issues/23">#23</a>)</li>
+</ul>
+</section>
+<section id="bugs-squashed-5" class="level3">
+<h3 class="anchored" data-anchor-id="bugs-squashed-5">Bugs Squashed</h3>
+<ul>
+<li>broken links in index.html page (<a href="https://github.com/fastai/ghapi/issues/27">#27</a>)</li>
+<li>Bug: <code>paged</code> does not pass <code>kwargs</code> to operation (<a href="https://github.com/fastai/ghapi/issues/24">#24</a>)</li>
+</ul>
+</section>
+</section>
+<section id="section-9" class="level2">
+<h2 class="anchored" data-anchor-id="section-9">0.1.13</h2>
+<section id="bugs-squashed-6" class="level3">
+<h3 class="anchored" data-anchor-id="bugs-squashed-6">Bugs Squashed</h3>
+<ul>
+<li>missing import in auth (<a href="https://github.com/fastai/ghapi/issues/21">#21</a>)</li>
+</ul>
+</section>
+</section>
+<section id="section-10" class="level2">
+<h2 class="anchored" data-anchor-id="section-10">0.1.11</h2>
+<section id="bugs-squashed-7" class="level3">
+<h3 class="anchored" data-anchor-id="bugs-squashed-7">Bugs Squashed</h3>
+<ul>
+<li>missing webbrowser import (<a href="https://github.com/fastai/ghapi/issues/20">#20</a>)</li>
+</ul>
+</section>
+</section>
+<section id="section-11" class="level2">
+<h2 class="anchored" data-anchor-id="section-11">0.1.10</h2>
+<ul>
+<li>Add <code>load_sample_events</code>, which loads a file of 1000 sample public events</li>
+</ul>
+</section>
+<section id="section-12" class="level2">
+<h2 class="anchored" data-anchor-id="section-12">0.1.8</h2>
+<section id="new-features-6" class="level3">
+<h3 class="anchored" data-anchor-id="new-features-6">New Features</h3>
+<ul>
+<li>add <code>fetch_events</code> (<a href="https://github.com/fastai/ghapi/issues/19">#19</a>)</li>
+</ul>
+</section>
+</section>
+<section id="section-13" class="level2">
+<h2 class="anchored" data-anchor-id="section-13">0.1.7</h2>
+<section id="new-features-7" class="level3">
+<h3 class="anchored" data-anchor-id="new-features-7">New Features</h3>
+<ul>
+<li>parallel <code>pages</code> (<a href="https://github.com/fastai/ghapi/issues/18">#18</a>)</li>
+<li>add <code>GhDeviceAuth</code> (<a href="https://github.com/fastai/ghapi/issues/15">#15</a>)</li>
+<li>add <code>date2gh</code> (<a href="https://github.com/fastai/ghapi/issues/14">#14</a>)</li>
+</ul>
+</section>
+</section>
+<section id="section-14" class="level2">
+<h2 class="anchored" data-anchor-id="section-14">0.1.6</h2>
+<section id="new-features-8" class="level3">
+<h3 class="anchored" data-anchor-id="new-features-8">New Features</h3>
+<ul>
+<li>add <code>paged</code> (<a href="https://github.com/fastai/ghapi/issues/13">#13</a>)</li>
+<li>add <code>gh_date</code> (<a href="https://github.com/fastai/ghapi/issues/12">#12</a>)</li>
+</ul>
+</section>
+</section>
+<section id="section-15" class="level2">
+<h2 class="anchored" data-anchor-id="section-15">0.1.1</h2>
+<section id="new-features-9" class="level3">
+<h3 class="anchored" data-anchor-id="new-features-9">New Features</h3>
+<ul>
+<li>add <code>list_tags</code> and <code>list_branches</code> (<a href="https://github.com/fastai/ghapi/issues/2">#2</a>)</li>
+</ul>
+</section>
+<section id="bugs-squashed-8" class="level3">
+<h3 class="anchored" data-anchor-id="bugs-squashed-8">Bugs Squashed</h3>
+<ul>
+<li><code>GhApi</code> pickle recursion error (<a href="https://github.com/fastai/ghapi/issues/3">#3</a>)</li>
+</ul>
+</section>
+</section>
+<section id="section-16" class="level2">
+<h2 class="anchored" data-anchor-id="section-16">0.1.0</h2>
+<ul>
+<li>First release with full API coverage</li>
+</ul>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
